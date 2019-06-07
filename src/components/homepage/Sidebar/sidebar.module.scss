@@ -1,12 +1,13 @@
 .sidebar {
   position: relative;
+  transition: 0.5s ease;
 }
 
 .title {
   font-size: 12px;
   border-bottom: 1px solid rgba(243, 51, 97, 0.5);
   padding: 7px 0px;
-  margin-bottom: 5px;
+  margin-bottom: 10px;
   color: rgba(243, 51, 97, 1);
 }
 
@@ -51,6 +52,13 @@
 
       li {
         width: 100%;
+        padding-left: 7px;
+
+        &.catTitle {
+          color: rgba(0, 0, 0, 0.8);
+          padding-left: 0px;
+          margin-bottom: 5px;
+        }
         a {
           width: 100%;
           display: block;
@@ -66,4 +74,11 @@
       }
     }
   }
+}
+
+.loading {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  height: 150px;
 }

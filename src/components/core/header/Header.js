@@ -17,7 +17,6 @@ export default function Header() {
       inputRef.current.focus();
     }
   }, [searching]);
-  console.log('searching: ', searching);
   return (
     <nav
       className={`navbar ${styles.mainNav}`}
