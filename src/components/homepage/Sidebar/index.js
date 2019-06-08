@@ -1,4 +1,4 @@
-import React, { useEffect, useReducer, useState } from 'react';
+import React, { useEffect, useReducer } from 'react';
 import { Link } from 'react-router-dom';
 import { getDepartments, getCategoriesByDepartment } from 'api/categories.api';
 import {
@@ -29,15 +29,11 @@ const processCategories = (departments, dispatch) => {
 
 export default function Sidebar() {
   const [state, dispatch] = useReducer(categoryReducer, initialState);
-  const [apiLoaded, setApiLoaded] = useState(false);
   useEffect(() => {
-    if (!apiLoaded) {
-      getDepartments().then(({ data }) => {
-        setApiLoaded(true);
-        processCategories(data, dispatch);
-      });
-    }
-  });
+    getDepartments().then(({ data }) => {
+      processCategories(data, dispatch);
+    });
+  }, []);
 
   const NavLinks = Object.keys(state.categories).map(department => (
     <li className={style.listItem} key={department}>
