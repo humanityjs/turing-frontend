@@ -30,3 +30,16 @@ html {
 .no-pad {
   padding: 0px;
 }
+
+.pagination {
+  li {
+    &.active {
+      background-color: rgb(243, 51, 97);
+      border-radius: 100%;
+
+      a {
+        color: #fff;
+      }
+    }
+  }
+}

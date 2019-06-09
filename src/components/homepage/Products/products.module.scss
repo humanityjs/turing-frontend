@@ -35,6 +35,7 @@
 .content {
   display: flex;
   flex-wrap: wrap;
+  min-height: 600px;
 }
 
 .loading {
@@ -43,4 +44,24 @@
   align-items: center;
   justify-content: center;
   width: 100%;
+}
+
+.pagination {
+  display: flex;
+  justify-content: center;
+
+  ul {
+    li {
+      padding: 4px 12px;
+      a {
+        display: inline-block;
+        color: rgb(243, 51, 97);
+        font-size: 14px;
+
+        &:focus {
+          outline: none;
+        }
+      }
+    }
+  }
 }

@@ -1,6 +1,6 @@
 import React from 'react';
 
-const Loader = ({ fill = '#f33361', size = '44', ...rest }) => (
+const Loader = ({ fill = '#f33361', size = '44' }) => (
   <svg
     width={size}
     height={size}
