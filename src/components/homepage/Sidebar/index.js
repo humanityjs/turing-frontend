@@ -46,7 +46,7 @@ export default function Sidebar() {
         <li className={style.catTitle}>CATEGORIES</li>
         {state.categories[department].map(cat => (
           <li key={cat.name}>
-            <Link to={`/categories/${cat.name}`}>{cat.name}</Link>
+            <Link to={`/?category=${cat.category_id}`}>{cat.name}</Link>
           </li>
         ))}
       </ul>

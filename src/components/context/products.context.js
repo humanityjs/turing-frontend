@@ -1,3 +1,5 @@
+import React from 'react';
+
 export const initialState = {
   loading: true,
   products: [],
@@ -30,4 +32,18 @@ export function productReducer(
     return reducers[action.type](initialState, action);
   }
   return initialState;
+}
+
+export const ProductContext = React.createContext({});
+
+ProductContext.displayName = 'ProductContext';
+
+export function SearchProvider({ children }) {
+  const [state, dispatch] = React.useReducer(productReducer, initialState);
+
+  return (
+    <ProductContext.Provider value={{ state, dispatch }}>
+      {children}
+    </ProductContext.Provider>
+  );
 }

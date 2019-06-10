@@ -4,13 +4,13 @@ import styles from './header.module.scss';
 import Icon from '../Icon';
 
 export default function Header() {
-  const onSubmit = e => {
-    e.preventDefault();
-    console.log('called');
+  const [text, setText] = useState('');
+  const onSubmit = event => {
+    event.preventDefault();
+    window.location.replace(`/?query=${text}`);
   };
   const [searching, toggleSearch] = useState(false);
   const show = searching => (searching ? styles.show : styles.hide);
-  const [text, setText] = useState('');
   const inputRef = React.useRef({});
   React.useEffect(() => {
     if (searching) {
@@ -58,7 +58,7 @@ export default function Header() {
                     inputRef={inputRef}
                     minLength={2}
                     debounceTimeout={300}
-                    onChange={() => console.log('searching')}
+                    onChange={event => setText(event.target.value)}
                   />
                   <span className={`icon is-small is-left ${styles.icon}`}>
                     <Icon

@@ -1,26 +1,44 @@
-import React, { useEffect, useReducer } from 'react';
+import React, { useEffect, useContext } from 'react';
+import { withRouter } from 'react-router-dom';
 import ReactPaginate from 'react-paginate';
 import style from './products.module.scss';
-import { getProducts } from 'api/products.api';
 import {
-  actions,
-  productReducer,
-  initialState
-} from '../../context/products.context';
+  getProducts,
+  getProductsWithCategory,
+  productSearch
+} from 'api/products.api';
+import { actions, ProductContext } from '../../context/products.context';
 import Loader from '../../../assets/Loader';
 import Card from '../../core/card';
 import Icon from '../../core/Icon';
+import { splitUrl } from 'utils';
 
-export default function Products() {
-  const [state, dispatch] = useReducer(productReducer, initialState);
+const methods = {
+  WITH_CATEGORY: getProductsWithCategory,
+  WITHOUT_CATEGORY: getProducts,
+  SEARCH: productSearch
+};
+
+function Products(props) {
+  const { category, page, query } = splitUrl(props.location.search);
+
+  const { state, dispatch } = useContext(ProductContext);
 
   const handlePageClick = ({ selected }) => {
     dispatch(actions.SET_PAGE(selected + 1));
   };
 
   useEffect(() => {
+    if (page) {
+      dispatch(actions.SET_PAGE(page));
+    }
+  }, [page, dispatch]);
+
+  useEffect(() => {
     dispatch(actions.SET_LOADING(true));
-    getProducts(state.page)
+    let method = category ? 'WITH_CATEGORY' : 'WITHOUT_CATEGORY';
+    method = query ? 'SEARCH' : method;
+    methods[method](state.page, query || category)
       .then(({ data }) => {
         dispatch(actions.SET_PRODUCTS(data));
         dispatch(actions.SET_LOADING(false));
@@ -28,7 +46,8 @@ export default function Products() {
       .catch(error => {
         console.log(error);
       });
-  }, [state.page]);
+  }, [state.page, dispatch, category, query]);
+
   const currentProducts = `${(state.page - 1) * 20 + 1} - ${state.page * 20}`;
   return (
     <div className={style.productContainer}>
@@ -77,3 +96,5 @@ export default function Products() {
     </div>
   );
 }
+
+export default withRouter(Products);
