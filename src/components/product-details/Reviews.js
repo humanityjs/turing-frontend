@@ -1,14 +1,18 @@
 import React, { useEffect, useState } from 'react';
 import Rater from 'react-rater';
+import Swal from 'sweetalert2';
 import moment from 'moment';
-import { getReviews } from 'api/products.api';
+import { getReviews, addReviews } from 'api/products.api';
 import style from './productdetails.module.scss';
 import Icon from '../core/Icon';
 import Loader from '../../assets/Loader';
 
 export default function Reviews({ productId }) {
   const [isLoading, setLoading] = useState(true);
+  const [isSubmitting, setSubmitting] = useState(false);
   const [reviews, setReviews] = useState([]);
+  const [reviewText, setReviewText] = useState('');
+  const [rating, setRating] = useState(0);
   console.log(productId);
   useEffect(() => {
     getReviews(productId).then(({ data }) => {
@@ -16,19 +20,51 @@ export default function Reviews({ productId }) {
       setLoading(false);
     });
   }, [productId]);
+
+  const saveRating = async () => {
+    if (!rating || !reviewText.trim()) {
+      return Swal.fire({
+        title: 'Error',
+        text: 'Please select a rating and add a review',
+        type: 'error',
+        confirmButtonText: 'Ok'
+      });
+    }
+    setSubmitting(true);
+    const newComment = await addReviews(productId, {
+      rating,
+      review: reviewText
+    });
+    console.log(newComment);
+
+    // to be completed after authentication
+  };
   return (
     <div className={style.review}>
       <h2>Reviews</h2>
 
       <div className={style.header}>
         <div className={style.textarea}>
-          <textarea placeholder="Write a review" rows="5" />
+          <textarea
+            onChange={e => setReviewText(e.target.value)}
+            placeholder="Write a review"
+            rows="5"
+          />
         </div>
         <div className={style.rating}>
-          <Rater total={5} rating={0} />
+          <Rater
+            onRate={({ rating }) => setRating(rating)}
+            total={5}
+            rating={rating}
+          />
         </div>
         <div className={style.button}>
-          <button>Write a review</button>
+          <button
+            className={isSubmitting ? 'button is-loading' : ''}
+            onClick={saveRating}
+          >
+            Write a review
+          </button>
         </div>
       </div>
 

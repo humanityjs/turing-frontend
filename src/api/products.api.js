@@ -25,3 +25,10 @@ export function getReviews(productId) {
     `https://backendapi.turing.com/products/${productId}/reviews`
   );
 }
+
+export function addReviews(productId, postData) {
+  return axios.post(
+    `https://backendapi.turing.com/products/${productId}/reviews`,
+    postData
+  );
+}
