@@ -17,7 +17,7 @@ export default function Header() {
     window.location.replace(`/?query=${text}`);
   };
   const { state, dispatch } = useContext(ProductContext);
-  const { dispatch: userDispatch } = useContext(AuthContext);
+  const { state: userState, dispatch: userDispatch } = useContext(AuthContext);
   const [searching, toggleSearch] = useState(false);
   const show = searching => (searching ? styles.show : styles.hide);
   const inputRef = React.useRef({});
@@ -118,15 +118,28 @@ export default function Header() {
               }`}
             >
               <a className={`navbar-link ${styles.accountDropdown}`}>
-                Hi, Bamidele
+                Hi, {userState.isAuthenticated ? userState.user.name : 'Guest'}
               </a>
 
               <div className="navbar-dropdown">
-                <a className="navbar-item">Accounts</a>
-                <a className="navbar-item">Orders</a>
-                <a onClick={logout} className="navbar-item">
-                  Logout
-                </a>
+                {userState.isAuthenticated ? (
+                  <>
+                    <a className="navbar-item">Accounts</a>
+                    <a className="navbar-item">Orders</a>
+                    <a onClick={logout} className="navbar-item">
+                      Logout
+                    </a>
+                  </>
+                ) : (
+                  <>
+                    <Link to="/login" className="navbar-item">
+                      Login
+                    </Link>
+                    <Link to="/create-account" className="navbar-item">
+                      Sign up
+                    </Link>
+                  </>
+                )}
               </div>
             </div>
           </div>
