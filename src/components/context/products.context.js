@@ -2,8 +2,9 @@ import React from 'react';
 
 export const initialState = {
   loading: true,
-  products: [],
-  page: 1
+  products: null,
+  page: 1,
+  product: {}
 };
 
 export const actions = {
@@ -15,13 +16,18 @@ export const actions = {
   SET_PAGE: page => ({
     type: 'SET_PAGE',
     payload: { page }
+  }),
+  SET_PRODUCT: product => ({
+    type: 'SET_PRODUCT',
+    payload: { product }
   })
 };
 
 const reducers = {
   SET_LOADING: (state, { payload }) => ({ ...state, ...payload }),
   SET_PRODUCTS: (state, { payload }) => ({ ...state, ...payload }),
-  SET_PAGE: (state, { payload }) => ({ ...state, ...payload })
+  SET_PAGE: (state, { payload }) => ({ ...state, ...payload }),
+  SET_PRODUCT: (state, { payload }) => ({ ...state, ...payload })
 };
 
 export function productReducer(
@@ -38,7 +44,7 @@ export const ProductContext = React.createContext({});
 
 ProductContext.displayName = 'ProductContext';
 
-export function SearchProvider({ children }) {
+export function ProductProvider({ children }) {
   const [state, dispatch] = React.useReducer(productReducer, initialState);
 
   return (

@@ -1,5 +1,6 @@
 import React, { useState } from 'react';
 import { DebounceInput } from 'react-debounce-input';
+import { Link } from 'react-router-dom';
 import styles from './header.module.scss';
 import Icon from '../Icon';
 
@@ -36,7 +37,9 @@ export default function Header() {
             <span aria-hidden="true" />
             <span aria-hidden="true" />
           </a>
-          <div className={styles.logo}>T-CULTURE</div>
+          <div className={styles.logo}>
+            <Link to="/">T-CULTURE</Link>
+          </div>
         </div>
         <div className={styles.left}>
           <div className="navbar-menu">

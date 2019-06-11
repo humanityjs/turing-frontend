@@ -15,3 +15,13 @@ export function productSearch(page = 1, queryString) {
     `https://backendapi.turing.com/products/search?query_string=${queryString}?page=${page}`
   );
 }
+
+export function getProduct(productId) {
+  return axios.get(`https://backendapi.turing.com/products/${productId}`);
+}
+
+export function getReviews(productId) {
+  return axios.get(
+    `https://backendapi.turing.com/products/${productId}/reviews`
+  );
+}

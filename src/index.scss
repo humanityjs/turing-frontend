@@ -43,3 +43,19 @@ html {
     }
   }
 }
+
+.react-rater-star {
+  font-size: 24px;
+  margin-right: 10px;
+
+  &.is-active,
+  &.will-be-active {
+    color: rgb(255, 227, 88);
+  }
+}
+
+.small-icon {
+  .react-rater-star {
+    font-size: 16px;
+  }
+}

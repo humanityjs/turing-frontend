@@ -49,6 +49,7 @@ function Products(props) {
   }, [state.page, dispatch, category, query]);
 
   const currentProducts = `${(state.page - 1) * 20 + 1} - ${state.page * 20}`;
+
   return (
     <div className={style.productContainer}>
       <div className={style.header}>
