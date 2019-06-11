@@ -2,7 +2,7 @@ import React, { useState, useContext, useEffect } from 'react';
 import { DebounceInput } from 'react-debounce-input';
 import { Link } from 'react-router-dom';
 import { actions, ProductContext } from '../../context/products.context';
-import { getCart } from 'api/cart.api';
+import { getCart, createCart } from 'api/cart.api';
 import styles from './header.module.scss';
 import Icon from '../Icon';
 
@@ -26,6 +26,11 @@ export default function Header() {
     if (state.cartId) {
       getCart(state.cartId).then(({ data }) => {
         dispatch(actions.SET_CART(data));
+      });
+    } else {
+      createCart().then(({ data }) => {
+        window.localStorage.setItem('cartId', data.cart_id);
+        dispatch(actions.SET_CART_ID(data.cart_id));
       });
     }
   }, [state.cartId, dispatch]);
@@ -114,7 +119,7 @@ export default function Header() {
             <button className={styles.cartButton}>
               <Icon icon={['fas', 'shopping-cart']} />
             </button>
-            {state.cart && state.cart.length && (
+            {state.cart && state.cart.length > 0 && (
               <span className={styles.count}>{state.cart.length}</span>
             )}
           </div>

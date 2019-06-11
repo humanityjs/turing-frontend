@@ -1,5 +1,6 @@
 import React, { useEffect, useContext, useState } from 'react';
 import { getProduct, getAttributes } from 'api/products.api';
+import { addToCart } from 'api/cart.api';
 import { Link } from 'react-router-dom';
 import { actions, ProductContext } from '../context/products.context';
 import style from './productdetails.module.scss';
@@ -8,12 +9,16 @@ import Radio from '../core/form/radio';
 
 export default function ProductDetailsComponent({ productId }) {
   const {
-    state: { product },
+    state: { product, cartId },
     dispatch
   } = useContext(ProductContext);
   const [isLoading, setLoading] = useState(true);
   const [attributes, setAttributes] = useState([]);
   const [selectedAttributes, setSelectedAttributes] = useState({});
+  const [errors, setErrors] = useState([]);
+  const [quantity, setQuantity] = useState(1);
+  const [message, setMessage] = useState('');
+  const [isAdded, setIsAdded] = useState(false);
 
   const processAttributes = attributes => {
     let result = {};
@@ -33,6 +38,40 @@ export default function ProductDetailsComponent({ productId }) {
   const onClick = e => {
     const newState = { ...selectedAttributes, [e.target.name]: e.target.value };
     setSelectedAttributes(newState);
+  };
+
+  const validate = () => {
+    let errors = [];
+    if (quantity < 1) {
+      errors.push('Please increase the quantity to 1 or more.');
+    }
+    Object.keys(selectedAttributes).map(attr => {
+      if (!selectedAttributes[attr]) {
+        errors.push(`Please select a ${attr}`);
+      }
+    });
+    setErrors(errors);
+    return errors.length <= 0;
+  };
+
+  const addCart = async e => {
+    e.preventDefault();
+    setErrors([]);
+    setIsAdded(false);
+    setMessage('');
+    if (validate()) {
+      let attributes = '';
+      Object.keys(selectedAttributes).map(attr => {
+        attributes += `${selectedAttributes[attr]}, `;
+      });
+      try {
+        const newProduct = await addToCart({ cartId, productId, attributes });
+        dispatch(actions.SET_CART(newProduct.data));
+        setIsAdded(true);
+      } catch (error) {
+        setMessage(error.message);
+      }
+    }
   };
 
   useEffect(() => {
@@ -93,7 +132,13 @@ export default function ProductDetailsComponent({ productId }) {
                   <label>Quantity</label>
                   <div className="field">
                     <div className="control">
-                      <input className="input" type="number" placeholder="1" />
+                      <input
+                        onChange={e => setQuantity(e.target.value)}
+                        className="input"
+                        type="number"
+                        placeholder="1"
+                        value={quantity}
+                      />
                     </div>
                   </div>
                 </div>
@@ -108,7 +153,23 @@ export default function ProductDetailsComponent({ productId }) {
                   </div>
                 ))}
                 <div className={style.actionButton}>
-                  <button>Add to cart</button>
+                  <button onClick={addCart}>Add to cart</button>
+                </div>
+                <div className={style.errors}>
+                  <ul>
+                    {errors.map(error => (
+                      <li key={error}> - {error}</li>
+                    ))}
+                  </ul>
+                </div>
+                <div className={style.message}>
+                  {isAdded && (
+                    <p className={style.success}>
+                      Product added to cart. Click{' '}
+                      <Link to="/checkout">here</Link> to checkout.
+                    </p>
+                  )}
+                  {message && <>{message}</>}
                 </div>
               </div>
             </div>
