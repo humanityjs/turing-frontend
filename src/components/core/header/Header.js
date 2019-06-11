@@ -1,5 +1,8 @@
-import React, { useState } from 'react';
+import React, { useState, useContext, useEffect } from 'react';
 import { DebounceInput } from 'react-debounce-input';
+import { Link } from 'react-router-dom';
+import { actions, ProductContext } from '../../context/products.context';
+import { getCart, createCart } from 'api/cart.api';
 import styles from './header.module.scss';
 import Icon from '../Icon';
 
@@ -9,14 +12,28 @@ export default function Header() {
     event.preventDefault();
     window.location.replace(`/?query=${text}`);
   };
+  const { state, dispatch } = useContext(ProductContext);
   const [searching, toggleSearch] = useState(false);
   const show = searching => (searching ? styles.show : styles.hide);
   const inputRef = React.useRef({});
-  React.useEffect(() => {
+  useEffect(() => {
     if (searching) {
       inputRef.current.focus();
     }
   }, [searching]);
+
+  useEffect(() => {
+    if (state.cartId) {
+      getCart(state.cartId).then(({ data }) => {
+        dispatch(actions.SET_CART(data));
+      });
+    } else {
+      createCart().then(({ data }) => {
+        window.localStorage.setItem('cartId', data.cart_id);
+        dispatch(actions.SET_CART_ID(data.cart_id));
+      });
+    }
+  }, [state.cartId, dispatch]);
   return (
     <nav
       className={`navbar ${styles.mainNav}`}
@@ -36,7 +53,9 @@ export default function Header() {
             <span aria-hidden="true" />
             <span aria-hidden="true" />
           </a>
-          <div className={styles.logo}>T-CULTURE</div>
+          <div className={styles.logo}>
+            <Link to="/">T-CULTURE</Link>
+          </div>
         </div>
         <div className={styles.left}>
           <div className="navbar-menu">
@@ -96,8 +115,13 @@ export default function Header() {
               </div>
             </div>
           </div>
-          <div className="navbar-item">
-            <Icon icon={['fas', 'shopping-cart']} />
+          <div className={`navbar-item ${styles.cart}`}>
+            <button className={styles.cartButton}>
+              <Icon icon={['fas', 'shopping-cart']} />
+            </button>
+            {state.cart && state.cart.length > 0 && (
+              <span className={styles.count}>{state.cart.length}</span>
+            )}
           </div>
         </div>
       </div>

@@ -1,0 +1,260 @@
+.productDetails {
+  padding-top: 20px;
+
+  .productContainer {
+    display: flex;
+    flex-wrap: wrap;
+
+    .imageDiv {
+      min-width: 250px;
+      // background-color: #000;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      min-height: 320px;
+    }
+
+    .details {
+      h2.bb {
+        font-size: 24px;
+        font-weight: 500;
+        color: rgb(85, 85, 85);
+        line-height: 1.1;
+        padding: 16px 0px;
+        border-bottom: 1px solid rgb(233, 233, 233);
+        font-family: 'Open Sans', sans-serif;
+      }
+
+      .description {
+        padding: 20px 0px;
+        border-bottom: 1px solid rgb(233, 233, 233);
+        min-height: 150px;
+
+        p {
+          font-size: 12px;
+        }
+      }
+
+      .price {
+        display: flex;
+        align-items: center;
+        padding: 10px 0;
+        .discounted {
+          font-size: 28px;
+          font-weight: 700;
+          color: rgb(243, 51, 97);
+          display: inline-block;
+          margin-right: 10px;
+        }
+        .realPrice {
+          color: rgb(128, 128, 128);
+          font-size: 14px;
+          text-decoration: line-through;
+        }
+      }
+    }
+  }
+}
+
+.quantity {
+  // display: flex;
+  // align-items: center;
+
+  label {
+    display: inline-block;
+    margin-right: 20px;
+    margin-bottom: 5px;
+  }
+
+  input {
+    max-width: 250px;
+  }
+}
+
+.actionButton {
+  padding: 20px 0px;
+
+  button {
+    padding: 10px 15px;
+    border: 1px solid rgb(243, 51, 97);
+    background-color: rgb(243, 51, 97);
+    color: #fff;
+    text-transform: uppercase;
+    border-radius: 5px;
+    cursor: pointer;
+    transition: 0.3s ease;
+
+    &:focus {
+      outline: none;
+    }
+
+    &:hover {
+      background-color: #fff;
+      color: rgb(243, 51, 97);
+    }
+  }
+}
+
+.review {
+  max-width: 800px;
+  margin: 0 auto;
+  margin-top: 20px;
+  h2 {
+    font-size: 16px;
+  }
+  .header {
+    padding: 10px 0px;
+
+    .textarea {
+      textarea {
+        height: 100px;
+        width: 250px;
+        border: 1px solid #fff;
+        border-radius: 5px;
+        padding: 5px;
+
+        &:focus {
+          outline: none;
+        }
+      }
+    }
+
+    .rating {
+      padding: 10px 0px;
+    }
+
+    .button {
+      button {
+        padding: 10px 15px;
+        border: 1px solid rgb(50, 115, 220);
+        background-color: rgb(50, 115, 220);
+        color: #fff;
+        text-transform: uppercase;
+        cursor: pointer;
+        transition: 0.3s ease;
+
+        &:focus {
+          outline: none;
+        }
+
+        &:hover {
+          background-color: rgb(65, 105, 152);
+          border-color: rgb(65, 105, 152);
+        }
+      }
+    }
+  }
+
+  .reviews {
+    padding: 20px 0px;
+    .review {
+      display: flex;
+      flex-wrap: wrap;
+      .date {
+        position: relative;
+        height: 50px;
+        display: flex;
+        align-items: center;
+        flex-basis: 150px;
+        margin-right: 10px;
+        margin-bottom: 10px;
+
+        .month {
+          padding: 5px;
+          height: 100%;
+          background-color: black;
+          color: #fff;
+          display: flex;
+          align-items: center;
+          justify-content: center;
+          text-transform: uppercase;
+          font-size: 16px;
+          font-weight: bold;
+        }
+
+        .rest {
+          height: 100%;
+          display: flex;
+          flex-direction: column;
+          background-color: #fff;
+          padding: 5px;
+        }
+
+        .day,
+        .year {
+          flex: 1;
+          font-weight: bold;
+        }
+
+        .day {
+          font-size: 16px;
+        }
+
+        .year {
+          font-size: 12px;
+        }
+
+        .arrow {
+          font-size: 24px;
+          color: #fff;
+        }
+      }
+
+      &__content {
+        border-bottom: 1px solid #eee;
+        flex: 1;
+        padding-bottom: 10px;
+        flex-basis: 300px;
+        &_rating {
+          margin-bottom: 5px;
+          display: flex;
+          align-items: center;
+
+          h3 {
+            margin-right: 10px;
+            font-size: 14px;
+            color: #000;
+            font-family: Roboto, Helvetica, Arial, sans-serif;
+          }
+        }
+        p {
+          color: #555;
+          font-size: 12px;
+        }
+      }
+    }
+  }
+}
+
+.isLoading {
+  height: 200px;
+  display: flex;
+  width: 100%;
+  align-items: center;
+  justify-content: center;
+}
+
+.attributes {
+  h2 {
+    border: none;
+  }
+  padding: 15px 0 0 0;
+}
+
+.errors {
+  ul {
+    li {
+      color: red;
+      font-size: 12px;
+      margin-bottom: 10px;
+    }
+  }
+}
+
+.message {
+  font-size: 14px;
+
+  .success {
+    color: green;
+  }
+}
