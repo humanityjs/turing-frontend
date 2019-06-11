@@ -25,7 +25,9 @@ export default function Card({
             <h4 className={style.realPrice}>${price}</h4>
           </div>
           <div className={style.footer}>
-            <button className={style.button}>Buy now</button>
+            <Link to={`/products/${product_id}`} className={style.button}>
+              Buy now
+            </Link>
           </div>
         </div>
       </div>

@@ -80,9 +80,9 @@ export default function Reviews({ productId }) {
             return (
               <article key={JSON.stringify(review)} className={style.review}>
                 <div className={style.date}>
-                  <span className={style.month}>{month}</span>
+                  <span className={style.month}>{day}</span>
                   <div className={style.rest}>
-                    <span className={style.day}>{day}</span>
+                    <span className={style.day}>{month}</span>
                     <span className={style.year}>{year}</span>
                   </div>
                   <Icon className={style.arrow} icon={['fas', 'caret-right']} />
