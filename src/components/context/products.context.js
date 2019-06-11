@@ -4,7 +4,9 @@ export const initialState = {
   loading: true,
   products: null,
   page: 1,
-  product: {}
+  product: {},
+  cart: null,
+  cartId: window.localStorage.getItem('cartId') || null
 };
 
 export const actions = {
@@ -20,6 +22,18 @@ export const actions = {
   SET_PRODUCT: product => ({
     type: 'SET_PRODUCT',
     payload: { product }
+  }),
+  SET_CART: cart => ({
+    type: 'SET_CART',
+    payload: { cart }
+  }),
+  SET_CART_ID: cartId => ({
+    type: 'SET_CART_ID',
+    payload: { cartId }
+  }),
+  ADD_TO_CART: product => ({
+    type: 'ADD_TO_CART',
+    payload: { product }
   })
 };
 
@@ -27,7 +41,14 @@ const reducers = {
   SET_LOADING: (state, { payload }) => ({ ...state, ...payload }),
   SET_PRODUCTS: (state, { payload }) => ({ ...state, ...payload }),
   SET_PAGE: (state, { payload }) => ({ ...state, ...payload }),
-  SET_PRODUCT: (state, { payload }) => ({ ...state, ...payload })
+  SET_PRODUCT: (state, { payload }) => ({ ...state, ...payload }),
+  SET_CART: (state, { payload }) => ({ ...state, ...payload }),
+  SET_CART_ID: (state, { payload }) => ({ ...state, ...payload }),
+  ADD_TO_CART: (state, { payload }) => {
+    const newCart = [...state.cart];
+    newCart.push(payload.product);
+    return { ...state, cart: newCart };
+  }
 };
 
 export function productReducer(

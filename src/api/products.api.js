@@ -32,3 +32,9 @@ export function addReviews(productId, postData) {
     postData
   );
 }
+
+export function getAttributes(productId) {
+  return axios.get(
+    `https://backendapi.turing.com/attributes/inProduct/${productId}`
+  );
+}

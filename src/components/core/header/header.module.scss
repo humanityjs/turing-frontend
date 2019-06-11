@@ -123,3 +123,33 @@
     font-size: 14px !important;
   }
 }
+
+.cart {
+  position: relative;
+
+  .cartButton {
+    border: none;
+    background: transparent;
+
+    & > * {
+      font-size: 18px;
+      cursor: pointer;
+    }
+
+    &:focus {
+      outline: none;
+    }
+  }
+
+  .count {
+    position: absolute;
+    display: flex;
+    padding: 1px 5px;
+    border-radius: 100%;
+    right: -5px;
+    top: -5px;
+    background-color: rgb(243, 51, 97);
+    color: #fff;
+    font-size: 12px;
+  }
+}

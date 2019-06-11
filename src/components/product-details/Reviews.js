@@ -13,7 +13,6 @@ export default function Reviews({ productId }) {
   const [reviews, setReviews] = useState([]);
   const [reviewText, setReviewText] = useState('');
   const [rating, setRating] = useState(0);
-  console.log(productId);
   useEffect(() => {
     getReviews(productId).then(({ data }) => {
       setReviews(data);

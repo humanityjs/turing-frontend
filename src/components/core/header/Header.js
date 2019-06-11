@@ -1,6 +1,8 @@
-import React, { useState } from 'react';
+import React, { useState, useContext, useEffect } from 'react';
 import { DebounceInput } from 'react-debounce-input';
 import { Link } from 'react-router-dom';
+import { actions, ProductContext } from '../../context/products.context';
+import { getCart } from 'api/cart.api';
 import styles from './header.module.scss';
 import Icon from '../Icon';
 
@@ -10,14 +12,23 @@ export default function Header() {
     event.preventDefault();
     window.location.replace(`/?query=${text}`);
   };
+  const { state, dispatch } = useContext(ProductContext);
   const [searching, toggleSearch] = useState(false);
   const show = searching => (searching ? styles.show : styles.hide);
   const inputRef = React.useRef({});
-  React.useEffect(() => {
+  useEffect(() => {
     if (searching) {
       inputRef.current.focus();
     }
   }, [searching]);
+
+  useEffect(() => {
+    if (state.cartId) {
+      getCart(state.cartId).then(({ data }) => {
+        dispatch(actions.SET_CART(data));
+      });
+    }
+  }, [state.cartId, dispatch]);
   return (
     <nav
       className={`navbar ${styles.mainNav}`}
@@ -99,8 +110,13 @@ export default function Header() {
               </div>
             </div>
           </div>
-          <div className="navbar-item">
-            <Icon icon={['fas', 'shopping-cart']} />
+          <div className={`navbar-item ${styles.cart}`}>
+            <button className={styles.cartButton}>
+              <Icon icon={['fas', 'shopping-cart']} />
+            </button>
+            {state.cart && state.cart.length && (
+              <span className={styles.count}>{state.cart.length}</span>
+            )}
           </div>
         </div>
       </div>

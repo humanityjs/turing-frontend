@@ -15,7 +15,7 @@
     }
 
     .details {
-      h2 {
+      h2.bb {
         font-size: 24px;
         font-weight: 500;
         color: rgb(85, 85, 85);
@@ -57,12 +57,17 @@
 }
 
 .quantity {
-  display: flex;
-  align-items: center;
+  // display: flex;
+  // align-items: center;
 
   label {
     display: inline-block;
     margin-right: 20px;
+    margin-bottom: 5px;
+  }
+
+  input {
+    max-width: 250px;
   }
 }
 
@@ -227,4 +232,11 @@
   width: 100%;
   align-items: center;
   justify-content: center;
+}
+
+.attributes {
+  h2 {
+    border: none;
+  }
+  padding: 15px 0 0 0;
 }
