@@ -29,7 +29,12 @@ export function getReviews(productId) {
 export function addReviews(productId, postData) {
   return axios.post(
     `https://backendapi.turing.com/products/${productId}/reviews`,
-    postData
+    postData,
+    {
+      headers: {
+        'user-key': window.localStorage.getItem('accessToken')
+      }
+    }
   );
 }
 

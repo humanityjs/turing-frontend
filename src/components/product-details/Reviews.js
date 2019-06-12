@@ -1,8 +1,9 @@
-import React, { useEffect, useState } from 'react';
+import React, { useEffect, useState, useContext } from 'react';
 import Rater from 'react-rater';
 import Swal from 'sweetalert2';
 import moment from 'moment';
 import { getReviews, addReviews } from 'api/products.api';
+import { AuthContext } from '../context/auth.context';
 import style from './productdetails.module.scss';
 import Icon from '../core/Icon';
 import Loader from '../../assets/Loader';
@@ -13,6 +14,7 @@ export default function Reviews({ productId }) {
   const [reviews, setReviews] = useState([]);
   const [reviewText, setReviewText] = useState('');
   const [rating, setRating] = useState(0);
+  const { state } = useContext(AuthContext);
   useEffect(() => {
     getReviews(productId).then(({ data }) => {
       setReviews(data);
@@ -30,11 +32,41 @@ export default function Reviews({ productId }) {
       });
     }
     setSubmitting(true);
-    const newComment = await addReviews(productId, {
-      rating,
-      review: reviewText
-    });
-    console.log(newComment);
+    try {
+      await addReviews(productId, {
+        rating,
+        review: reviewText
+      });
+      const newReviews = [
+        {
+          created_on: moment(),
+          review: reviewText,
+          rating,
+          name: state.user.name
+        },
+        ...reviews
+      ];
+
+      Swal.fire({
+        title: 'Success',
+        text: 'Rating added successfully',
+        type: 'success',
+        confirmButtonText: 'Ok'
+      });
+
+      setSubmitting(false);
+      setReviews(newReviews);
+      setReviewText('');
+      setRating(0);
+    } catch (e) {
+      setSubmitting(false);
+      Swal.fire({
+        title: 'Error',
+        text: 'Something went wrong',
+        type: 'error',
+        confirmButtonText: 'Ok'
+      });
+    }
 
     // to be completed after authentication
   };
@@ -42,30 +74,32 @@ export default function Reviews({ productId }) {
     <div className={style.review}>
       <h2>Reviews</h2>
 
-      <div className={style.header}>
-        <div className={style.textarea}>
-          <textarea
-            onChange={e => setReviewText(e.target.value)}
-            placeholder="Write a review"
-            rows="5"
-          />
+      {state.isAuthenticated && (
+        <div className={style.header}>
+          <div className={style.textarea}>
+            <textarea
+              onChange={e => setReviewText(e.target.value)}
+              placeholder="Write a review"
+              rows="5"
+            />
+          </div>
+          <div className={style.rating}>
+            <Rater
+              onRate={({ rating }) => setRating(rating)}
+              total={5}
+              rating={rating}
+            />
+          </div>
+          <div className={style.button}>
+            <button
+              className={isSubmitting ? 'button is-loading' : ''}
+              onClick={saveRating}
+            >
+              Write a review
+            </button>
+          </div>
         </div>
-        <div className={style.rating}>
-          <Rater
-            onRate={({ rating }) => setRating(rating)}
-            total={5}
-            rating={rating}
-          />
-        </div>
-        <div className={style.button}>
-          <button
-            className={isSubmitting ? 'button is-loading' : ''}
-            onClick={saveRating}
-          >
-            Write a review
-          </button>
-        </div>
-      </div>
+      )}
 
       {isLoading ? (
         <div className={style.isLoading}>
