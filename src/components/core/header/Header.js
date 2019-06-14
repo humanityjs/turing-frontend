@@ -2,6 +2,10 @@ import React, { useState, useContext, useEffect } from 'react';
 import { DebounceInput } from 'react-debounce-input';
 import { Link } from 'react-router-dom';
 import { actions, ProductContext } from '../../context/products.context';
+import {
+  actions as userActions,
+  AuthContext
+} from '../../context/auth.context';
 import { getCart, createCart } from 'api/cart.api';
 import styles from './header.module.scss';
 import Icon from '../Icon';
@@ -13,6 +17,7 @@ export default function Header() {
     window.location.replace(`/?query=${text}`);
   };
   const { state, dispatch } = useContext(ProductContext);
+  const { state: userState, dispatch: userDispatch } = useContext(AuthContext);
   const [searching, toggleSearch] = useState(false);
   const show = searching => (searching ? styles.show : styles.hide);
   const inputRef = React.useRef({});
@@ -34,6 +39,14 @@ export default function Header() {
       });
     }
   }, [state.cartId, dispatch]);
+
+  const logout = e => {
+    e.preventDefault();
+    window.localStorage.removeItem('accessToken');
+    userDispatch(userActions.SET_TOKEN(null));
+    userDispatch(userActions.SET_USER(null));
+    userDispatch(userActions.SET_AUTH(false));
+  };
   return (
     <nav
       className={`navbar ${styles.mainNav}`}
@@ -105,13 +118,28 @@ export default function Header() {
               }`}
             >
               <a className={`navbar-link ${styles.accountDropdown}`}>
-                Hi, Bamidele
+                Hi, {userState.isAuthenticated ? userState.user.name : 'Guest'}
               </a>
 
               <div className="navbar-dropdown">
-                <a className="navbar-item">Accounts</a>
-                <a className="navbar-item">Orders</a>
-                <a className="navbar-item">Logout</a>
+                {userState.isAuthenticated ? (
+                  <>
+                    <a className="navbar-item">Accounts</a>
+                    <a className="navbar-item">Orders</a>
+                    <a onClick={logout} className="navbar-item">
+                      Logout
+                    </a>
+                  </>
+                ) : (
+                  <>
+                    <Link to="/login" className="navbar-item">
+                      Login
+                    </Link>
+                    <Link to="/create-account" className="navbar-item">
+                      Sign up
+                    </Link>
+                  </>
+                )}
               </div>
             </div>
           </div>
