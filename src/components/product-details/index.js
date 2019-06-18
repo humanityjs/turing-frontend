@@ -65,7 +65,12 @@ export default function ProductDetailsComponent({ productId }) {
         attributes += `${selectedAttributes[attr]}, `;
       });
       try {
-        const newProduct = await addToCart({ cartId, productId, attributes });
+        const newProduct = await addToCart({
+          cartId,
+          productId,
+          attributes,
+          quantity
+        });
         dispatch(actions.SET_CART(newProduct.data));
         setIsAdded(true);
       } catch (error) {
@@ -165,8 +170,8 @@ export default function ProductDetailsComponent({ productId }) {
                 <div className={style.message}>
                   {isAdded && (
                     <p className={style.success}>
-                      Product added to cart. Click{' '}
-                      <Link to="/checkout">here</Link> to checkout.
+                      Product added to cart. Click <Link to="/cart">here</Link>{' '}
+                      to checkout.
                     </p>
                   )}
                   {message && <>{message}</>}

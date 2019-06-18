@@ -9,6 +9,7 @@ import Login from './pages/Login';
 import SignUp from './pages/SignUp';
 import AuthWrapper from './components/core/wrappers/AuthWrapper';
 import { AuthProvider } from './components/context/auth.context';
+import Cart from './pages/Cart';
 
 function App() {
   return (
@@ -30,6 +31,7 @@ function App() {
                 path="/create-account"
                 component={SignUp}
               />
+              <AuthWrapper exact path="/cart" component={Cart} />
               <Route
                 exact
                 path="*"
