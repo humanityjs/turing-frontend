@@ -31,7 +31,7 @@ class CheckoutForm extends Component {
         stripeToken: token.id,
         order_id: data.orderId,
         description: `Payment for order ${data.orderId}`,
-        amount: parseFloat(this.props.grandTotal) * 100
+        amount: parseFloat(this.props.grandTotal).toFixed(2) * 100
       };
       const payment = await processPayment(paymentPayload);
       this.setState({
