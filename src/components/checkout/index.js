@@ -47,7 +47,7 @@ export default function CheckoutComponent() {
       region,
       country,
       shipping_region_id
-    } = user;
+    } = user || {};
 
     if (
       !address_1 ||
@@ -73,12 +73,12 @@ export default function CheckoutComponent() {
   };
 
   useEffect(() => {
-    if (user.shipping_region_id) {
+    if (user && user.shipping_region_id) {
       getShippingMethods(user.shipping_region_id).then(({ data }) => {
         setShippingMethods(data);
       });
     }
-  }, [user.shipping_region_id]);
+  }, [user]);
 
   if (detailsCompleted() && !stepOne) {
     setStepOne(true);
