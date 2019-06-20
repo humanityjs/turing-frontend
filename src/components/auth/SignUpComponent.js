@@ -35,6 +35,7 @@ export default class SignUpComponent extends Component {
     window.localStorage.setItem('accessToken', data.accessToken);
     dispatch(actions.SET_TOKEN(data.accessToken));
     dispatch(actions.SET_AUTH(true));
+    window.location.pathname = '/';
   };
 
   createUser = async () => {

@@ -1,0 +1,169 @@
+.checkout {
+  padding: 40px 0;
+  max-width: 800px;
+  margin: 0 auto;
+  .loginText {
+    font-size: 16px;
+  }
+
+  .title {
+    font-size: 16px;
+    text-transform: uppercase;
+  }
+
+  .step {
+    background-color: #fff;
+    margin-top: 10px;
+    margin-bottom: 10px;
+    border-radius: 5px;
+
+    .header {
+      padding: 10px 20px;
+      border-bottom: 1px solid rgb(240, 240, 240);
+
+      .title {
+        font-size: 14px;
+        text-transform: uppercase;
+        font-weight: 500;
+        color: #000;
+      }
+    }
+
+    .body {
+      padding: 20px 20px;
+      &__title {
+        color: #000;
+        font-size: 14px;
+        font-weight: 500;
+      }
+
+      &__body {
+        font-size: 13px;
+        color: rgb(128, 128, 128);
+      }
+
+      &__title_small {
+        font-size: 14px;
+      }
+
+      .separator {
+        padding: 3px 0;
+        display: flex;
+        max-width: 200px;
+        justify-content: space-between;
+
+        .label,
+        .value {
+          font-size: 14px;
+          color: rgb(74, 74, 74);
+        }
+
+        .total_label {
+          font-size: 14px;
+          color: rgb(74, 74, 74);
+          font-weight: 500;
+        }
+
+        .total_value {
+          font-size: 17px;
+          color: rgb(243, 51, 97);
+          font-weight: 700;
+        }
+      }
+    }
+
+    .paymentButton {
+      padding: 10px 15px;
+      border: 1px solid rgb(243, 51, 97);
+      background-color: rgb(243, 51, 97);
+      color: #fff;
+      text-transform: uppercase;
+      border-radius: 5px;
+      cursor: pointer;
+      transition: 0.3s ease;
+      display: inline-block;
+
+      &:focus {
+        outline: none;
+      }
+
+      &:hover {
+        background-color: #fff;
+        color: rgb(243, 51, 97);
+      }
+    }
+  }
+}
+
+.button {
+  margin-top: 20px;
+  padding: 10px 15px;
+  border: 1px solid rgb(243, 51, 97);
+  background-color: rgb(243, 51, 97);
+  color: #fff;
+  text-transform: uppercase;
+  border-radius: 5px;
+  cursor: pointer;
+  transition: 0.3s ease;
+  display: inline-block;
+
+  &:focus {
+    outline: none;
+  }
+
+  &:hover {
+    background-color: #fff;
+    color: rgb(243, 51, 97);
+  }
+}
+
+.border {
+  margin-top: 5px;
+  border-top: 1px solid #ccc;
+}
+
+.checkoutForm {
+  background-color: #fff;
+  padding: 20px;
+  border-radius: 5px;
+  z-index: 999999999s;
+  flex-basis: 350px;
+
+  p {
+    font-size: 14px;
+    margin-bottom: 20px;
+  }
+}
+
+.modal {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  height: 100vh;
+  padding: 20px;
+  z-index: 9999999;
+}
+
+.overlay {
+  position: fixed;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  background-color: rgba(0, 0, 0, 0.5);
+}
+.borderBottom {
+  border-bottom: thin solid #ccc;
+  padding-bottom: 10px;
+}
+
+.noItem {
+  padding: 40px 0;
+  max-width: 800px;
+  margin: 0 auto;
+  h3 {
+    font-size: 16px;
+    font-weight: 600;
+    margin-bottom: 10px;
+  }
+}

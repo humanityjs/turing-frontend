@@ -12,13 +12,21 @@ export default function AuthWrapper({
   const { state, dispatch } = useContext(AuthContext);
   useEffect(() => {
     if (state.accessToken && !state.user) {
-      getUser().then(({ data }) => {
-        dispatch(actions.SET_USER(data));
-        dispatch(actions.SET_AUTH(true));
-        setIsLoading(false);
-      });
+      getUser()
+        .then(({ data }) => {
+          dispatch(actions.SET_USER(data));
+          dispatch(actions.SET_AUTH(true));
+          setIsLoading(false);
+        })
+        .catch(() => {
+          dispatch(actions.SET_USER(null));
+          dispatch(actions.SET_AUTH(false));
+          setIsLoading(false);
+        });
     } else {
-      setIsLoading(false);
+      setTimeout(() => {
+        setIsLoading(false);
+      }, 1000);
     }
   }, [state.accessToken, state.user, dispatch]);
   const renderComponent = props => {

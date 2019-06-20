@@ -1,5 +1,7 @@
 import React from 'react';
 import { BrowserRouter, Route, Switch } from 'react-router-dom';
+import { toast } from 'react-toastify';
+import 'react-toastify/dist/ReactToastify.css';
 import './App.css';
 import Homepage from './pages/Homepage';
 import Layout from './components/core/layout';
@@ -9,6 +11,11 @@ import Login from './pages/Login';
 import SignUp from './pages/SignUp';
 import AuthWrapper from './components/core/wrappers/AuthWrapper';
 import { AuthProvider } from './components/context/auth.context';
+import Cart from './pages/Cart';
+import Checkout from './pages/Checkout';
+import Account from './pages/Account';
+
+toast.configure();
 
 function App() {
   return (
@@ -29,6 +36,14 @@ function App() {
                 exact
                 path="/create-account"
                 component={SignUp}
+              />
+              <AuthWrapper exact path="/cart" component={Cart} />
+              <AuthWrapper exact path="/checkout" component={Checkout} />
+              <AuthWrapper
+                type="auth"
+                exact
+                path="/account"
+                component={Account}
               />
               <Route
                 exact

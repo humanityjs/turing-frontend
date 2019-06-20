@@ -12,7 +12,7 @@ export const actions = {
     payload: { user }
   }),
   SET_TOKEN: accessToken => ({
-    type: 'SET_accessToken',
+    type: 'SET_TOKEN',
     payload: { accessToken }
   }),
   SET_AUTH: isAuthenticated => ({

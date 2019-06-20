@@ -124,8 +124,12 @@ export default function Header() {
               <div className="navbar-dropdown">
                 {userState.isAuthenticated ? (
                   <>
-                    <a className="navbar-item">Accounts</a>
-                    <a className="navbar-item">Orders</a>
+                    <Link to="/account" className="navbar-item">
+                      Accounts
+                    </Link>
+                    <a href="#" className="navbar-item">
+                      Orders
+                    </a>
                     <a onClick={logout} className="navbar-item">
                       Logout
                     </a>
@@ -144,9 +148,9 @@ export default function Header() {
             </div>
           </div>
           <div className={`navbar-item ${styles.cart}`}>
-            <button className={styles.cartButton}>
+            <Link to="/cart" className={styles.cartButton}>
               <Icon icon={['fas', 'shopping-cart']} />
-            </button>
+            </Link>
             {state.cart && state.cart.length > 0 && (
               <span className={styles.count}>{state.cart.length}</span>
             )}
