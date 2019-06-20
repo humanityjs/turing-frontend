@@ -1,0 +1,37 @@
+.account {
+  padding: 40px 0;
+  max-width: 800px;
+  margin: 0 auto;
+
+  .formCont {
+    margin-top: 10px;
+    background-color: #fff;
+    padding: 10px;
+  }
+  .footer {
+    padding: 20px 10px;
+    .button {
+      padding: 10px 15px;
+      border: 1px solid rgb(243, 51, 97);
+      background-color: rgb(243, 51, 97);
+      color: #fff;
+      text-transform: uppercase;
+      border-radius: 5px;
+      cursor: pointer;
+      transition: 0.3s ease;
+
+      &:focus {
+        outline: none;
+      }
+
+      &:hover {
+        background-color: #fff;
+        color: rgb(243, 51, 97);
+      }
+    }
+    .loginText {
+      font-size: 16px;
+      margin-bottom: 20px;
+    }
+  }
+}

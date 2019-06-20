@@ -124,8 +124,12 @@ export default function Header() {
               <div className="navbar-dropdown">
                 {userState.isAuthenticated ? (
                   <>
-                    <a className="navbar-item">Accounts</a>
-                    <a className="navbar-item">Orders</a>
+                    <Link to="/account" className="navbar-item">
+                      Accounts
+                    </Link>
+                    <a href="#" className="navbar-item">
+                      Orders
+                    </a>
                     <a onClick={logout} className="navbar-item">
                       Logout
                     </a>

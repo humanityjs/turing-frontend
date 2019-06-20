@@ -24,7 +24,9 @@ export default function AuthWrapper({
           setIsLoading(false);
         });
     } else {
-      setIsLoading(false);
+      setTimeout(() => {
+        setIsLoading(false);
+      }, 1000);
     }
   }, [state.accessToken, state.user, dispatch]);
   const renderComponent = props => {

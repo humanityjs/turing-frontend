@@ -33,3 +33,25 @@ export function removeProduct(itemId) {
     `https://backendapi.turing.com/shoppingcart/removeProduct/${itemId}`
   );
 }
+
+export function getShippingMethods(regionId) {
+  return axios.get(
+    `https://backendapi.turing.com/shipping/regions/${regionId}`
+  );
+}
+
+export function createOrder(payload) {
+  return axios.post(`https://backendapi.turing.com/orders`, payload, {
+    headers: {
+      'user-key': window.localStorage.getItem('accessToken')
+    }
+  });
+}
+
+export function processPayment(payload) {
+  return axios.post(`https://backendapi.turing.com/stripe/charge`, payload, {
+    headers: {
+      'user-key': window.localStorage.getItem('accessToken')
+    }
+  });
+}
