@@ -31,6 +31,7 @@ export default function CartComponent() {
       console.log('error');
     }
   };
+
   return (
     <div className={style.cart}>
       <h2 className={style.cartHeader}>
