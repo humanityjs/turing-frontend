@@ -89,6 +89,8 @@ export default function ProductDetailsComponent({ productId }) {
     });
   }, [productId, dispatch]);
 
+  const noDiscount = parseInt(product.discounted_price, 10) === 0;
+
   return (
     <>
       {isLoading ? (
@@ -129,9 +131,11 @@ export default function ProductDetailsComponent({ productId }) {
                 </div>
                 <div className={style.price}>
                   <span className={style.discounted}>
-                    ${product.discounted_price}
+                    ${noDiscount ? product.price : product.discounted_price}
                   </span>
-                  <span className={style.realPrice}>${product.price}</span>
+                  {!noDiscount && (
+                    <span className={style.realPrice}>${product.price}</span>
+                  )}
                 </div>
                 <div className={style.quantity}>
                   <label>Quantity</label>
