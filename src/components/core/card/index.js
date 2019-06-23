@@ -9,6 +9,7 @@ export default function Card({
   price,
   discounted_price
 }) {
+  const noDiscount = parseInt(discounted_price, 10) === 0;
   return (
     <Link to={`/products/${product_id}`}>
       <div className={`${style.card}`}>
@@ -21,8 +22,10 @@ export default function Card({
         <div className={style.body}>
           <h2 className={style.name}>{name}</h2>
           <div className={style.price}>
-            <h3 className={style.discounted}>${discounted_price}</h3>
-            <h4 className={style.realPrice}>${price}</h4>
+            <h3 className={style.discounted}>
+              ${noDiscount ? price : discounted_price}
+            </h3>
+            {!noDiscount && <h4 className={style.realPrice}>${price}</h4>}
           </div>
           <div className={style.footer}>
             <Link to={`/products/${product_id}`} className={style.button}>

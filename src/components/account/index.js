@@ -126,14 +126,14 @@ export default function AccountComponent() {
       toast.success('Details edited successfully');
       setSubmitting(false);
     } catch (e) {
-      console.log(console.log(JSON.stringify(e, null, 2)));
+      console.log(JSON.stringify(e, null, 2));
       toast.error(
         'Something went wrong. Please check you input and try again.'
       );
       setSubmitting(false);
     }
   };
-  console.log(newState);
+
   return (
     <div className={style.account}>
       <h2>Account Details</h2>
@@ -331,6 +331,7 @@ export default function AccountComponent() {
             disabled={isSubmitting}
             onClick={onSubmit}
             className={style.button}
+            id="submitButton"
           >
             {isSubmitting ? 'Saving..' : 'Save'}
           </button>
