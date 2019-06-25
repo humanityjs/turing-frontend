@@ -45,7 +45,6 @@ export default function CheckoutComponent() {
       postal_code,
       city,
       region,
-      country,
       shipping_region_id
     } = user || {};
 
@@ -55,7 +54,6 @@ export default function CheckoutComponent() {
       !postal_code ||
       !city ||
       !region ||
-      !country ||
       !shipping_region_id
     ) {
       return false;
@@ -101,7 +99,10 @@ export default function CheckoutComponent() {
                     <div className={style.body}>
                       <h3 className={style.body__title}>{user.name}</h3>
                       {!detailsCompleted() ? (
-                        <Link to="/account" className={style.button}>
+                        <Link
+                          to="/account?redirect=checkout"
+                          className={style.button}
+                        >
                           UPDATE YOUR ACCOUNT TO CONTINUE
                         </Link>
                       ) : (
@@ -203,7 +204,7 @@ export default function CheckoutComponent() {
             ) : (
               <div>
                 <p className={style.loginText}>You need to login to continue</p>
-                <Link to="/login" className={style.button}>
+                <Link to="/login?redirect=checkout" className={style.button}>
                   Login
                 </Link>
               </div>

@@ -1,5 +1,7 @@
 import React, { useContext, useState, useEffect } from 'react';
 import { toast } from 'react-toastify';
+import { getUser } from 'api/auth.api';
+import { splitUrl } from 'utils/common';
 import CreditCardInput from '../core/creditCard';
 import {
   getRegions,
@@ -7,12 +9,12 @@ import {
   editCustomerAddress,
   editCustomerCard
 } from 'api/auth.api';
-import { AuthContext } from '../context/auth.context';
+import { actions, AuthContext } from '../context/auth.context';
 import style from './account.module.scss';
 import CountrySelect from './CountrySelect';
 
 export default function AccountComponent() {
-  const { state } = useContext(AuthContext);
+  const { state, dispatch } = useContext(AuthContext);
   const clonedState = state.user || {};
   const [newState, setState] = useState({ ...clonedState });
   const [regions, setRegions] = useState([]);
@@ -123,8 +125,15 @@ export default function AccountComponent() {
       await editCustomer(customerData);
       await editCustomerAddress(customerAddress);
       await editCustomerCard(customerCreditCard);
+      const { data } = await getUser();
+      dispatch(actions.SET_USER(data));
       toast.success('Details edited successfully');
       setSubmitting(false);
+      const { redirect } = splitUrl(window.location.search);
+
+      if (redirect) {
+        window.location.href = `/${redirect}`;
+      }
     } catch (e) {
       console.log(JSON.stringify(e, null, 2));
       toast.error(

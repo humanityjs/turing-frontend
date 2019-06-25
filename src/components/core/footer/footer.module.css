@@ -1,11 +1,16 @@
 .footer {
-  height: 56px;
   background-color: #000;
-  width: 100%;
-  max-width: 1200px;
-  display: flex;
-  align-items: center;
+
   padding: 5px;
   color: #fafafa;
   font-size: 14px;
+}
+
+.footerDiv {
+  max-width: 1200px;
+  width: 100%;
+  display: flex;
+  align-items: center;
+  margin: 0 auto;
+  height: 56px;
 }

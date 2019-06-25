@@ -3,6 +3,7 @@ import { Link } from 'react-router-dom';
 import Swal from 'sweetalert2';
 import { login } from 'api/auth.api';
 import { actions, AuthContext } from '../context/auth.context';
+import { splitUrl } from 'utils/common';
 import style from './auth.module.scss';
 
 export default class LoginComponent extends Component {
@@ -11,6 +12,8 @@ export default class LoginComponent extends Component {
     email: '',
     password: ''
   };
+
+  redirect = splitUrl(window.location.search).redirect;
 
   onChange = e => {
     e.preventDefault();
@@ -33,8 +36,11 @@ export default class LoginComponent extends Component {
     dispatch(actions.SET_USER(data.customer));
     window.localStorage.setItem('accessToken', data.accessToken);
     dispatch(actions.SET_TOKEN(data.accessToken));
-    dispatch(actions.SET_AUTH(true));
-    window.location.pathname = '/';
+    // dispatch(actions.SET_AUTH(true));
+
+    if (this.redirect) {
+      window.location.href = `/${this.redirect}`;
+    }
   };
 
   loginUser = async () => {
@@ -56,6 +62,9 @@ export default class LoginComponent extends Component {
   };
 
   render() {
+    const signUpLink = this.redirect
+      ? `/create-account?redirect=${this.redirect}`
+      : '/create-account';
     return (
       <div className={style.authWrapper}>
         <div className={style.authContent}>
@@ -87,7 +96,7 @@ export default class LoginComponent extends Component {
               Login
             </button>
             <p className={style.existing}>
-              <Link to="/create-account">Create account</Link>
+              <Link to={signUpLink}>Create account</Link>
             </p>
           </div>
         </div>

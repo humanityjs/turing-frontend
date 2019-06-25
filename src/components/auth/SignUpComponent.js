@@ -2,6 +2,7 @@ import React, { Component } from 'react';
 import { Link } from 'react-router-dom';
 import Swal from 'sweetalert2';
 import { createNewUser } from 'api/auth.api';
+import { splitUrl } from 'utils/common';
 import { actions, AuthContext } from '../context/auth.context';
 import style from './auth.module.scss';
 
@@ -12,6 +13,8 @@ export default class SignUpComponent extends Component {
     email: '',
     password: ''
   };
+
+  redirect = splitUrl(window.location.search).redirect;
 
   onChange = e => {
     e.preventDefault();
@@ -34,15 +37,17 @@ export default class SignUpComponent extends Component {
     dispatch(actions.SET_USER(data.customer));
     window.localStorage.setItem('accessToken', data.accessToken);
     dispatch(actions.SET_TOKEN(data.accessToken));
-    dispatch(actions.SET_AUTH(true));
-    window.location.pathname = '/';
+    // dispatch(actions.SET_AUTH(true));
+
+    if (this.redirect) {
+      window.location.href = `/${this.redirect}`;
+    }
   };
 
   createUser = async () => {
     if (this.validateInput()) {
       try {
         const newUser = await createNewUser(this.state);
-        console.log(newUser.data);
         this.processUser(newUser.data);
         Swal.fire({
           type: 'success',
@@ -64,6 +69,9 @@ export default class SignUpComponent extends Component {
   };
 
   render() {
+    const loginLink = this.redirect
+      ? `/login?redirect=${this.redirect}`
+      : '/login';
     return (
       <div className={style.authWrapper}>
         <div className={style.authContent}>
@@ -104,7 +112,7 @@ export default class SignUpComponent extends Component {
               Create Account
             </button>
             <p className={style.existing}>
-              <Link to="/login">I have an account</Link>
+              <Link to={loginLink}>I have an account</Link>
             </p>
           </div>
         </div>
