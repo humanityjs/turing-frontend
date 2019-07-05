@@ -1,4 +1,4 @@
-import React, { useEffect, useReducer } from 'react';
+import React, { useEffect, useReducer, useState } from 'react';
 import { Link } from 'react-router-dom';
 import { getDepartments, getCategoriesByDepartment } from 'api/categories.api';
 import {
@@ -9,6 +9,7 @@ import {
 import style from './sidebar.module.scss';
 import Icon from '../../core/Icon';
 import Loader from '../../../assets/Loader';
+import { splitUrl } from 'utils';
 
 const processCategories = (departments, dispatch) => {
   let promises = [];
@@ -29,32 +30,57 @@ const processCategories = (departments, dispatch) => {
 
 export default function Sidebar() {
   const [state, dispatch] = useReducer(categoryReducer, initialState);
+  const { category } = splitUrl(window.location.search);
+  const [selected, setSelected] = useState(initialState);
   useEffect(() => {
     getDepartments().then(({ data }) => {
       processCategories(data, dispatch);
     });
   }, []);
 
+  useEffect(() => {
+    let selected = null;
+    if (category) {
+      for (const item of Object.keys(state.categories)) {
+        state.categories[item].map(cat => {
+          if (parseInt(cat.category_id, 10) === parseInt(category, 10)) {
+            selected = item;
+          }
+        });
+      }
+    }
+    setSelected(selected);
+  }, [category, state.categories]);
+
   const NavLinks = Object.keys(state.categories).map(department => (
     <li className={style.listItem} key={department}>
-      <span>
-        <Icon className={style.icon} icon={['fas', 'map-marker']} />{' '}
-        {department}
-      </span>
-      <Icon className={style.iconRight} icon={['fas', 'chevron-right']} />
+      <div className={style.listContent}>
+        <span className={selected === department ? style.isSelected : ''}>
+          <Icon className={style.icon} icon={['fas', 'map-marker']} />{' '}
+          {department}
+        </span>
+      </div>
       <ul className={style.listChild}>
-        <li className={style.catTitle}>CATEGORIES</li>
-        {state.categories[department].map(cat => (
-          <li key={cat.name}>
-            <Link to={`/?category=${cat.category_id}`}>{cat.name}</Link>
-          </li>
-        ))}
+        {state.categories[department].map(cat => {
+          const isSelected =
+            parseInt(cat.category_id, 10) === parseInt(category, 10);
+          return (
+            <li key={cat.name}>
+              <Link
+                className={isSelected ? style.isSelected : ''}
+                to={`/?category=${cat.category_id}`}
+              >
+                - {cat.name}
+              </Link>
+            </li>
+          );
+        })}
       </ul>
     </li>
   ));
   return (
     <div className={style.sidebar}>
-      <h2 className={style.title}>DEPARTMENTS</h2>
+      <h2 className={style.title}>CATEGORIES</h2>
       {state.loading ? (
         <div className={style.loading}>
           <Loader size="50" />

@@ -6,7 +6,7 @@ import Products from './Products';
 export default function HomepageComponent() {
   return (
     <div className="columns">
-      <div className="column is-one-quarter no-pad">
+      <div className="column is-one-fifth no-pad">
         <div className={style.sidebar}>
           <Sidebar />
         </div>

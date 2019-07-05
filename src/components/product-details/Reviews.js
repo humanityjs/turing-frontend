@@ -72,7 +72,7 @@ export default function Reviews({ productId }) {
   };
   return (
     <div className={style.review}>
-      <h2>Reviews</h2>
+      <h2>Product Reviews</h2>
 
       {state.isAuthenticated && (
         <div className={style.header}>

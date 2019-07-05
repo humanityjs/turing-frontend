@@ -4,6 +4,7 @@
   .productContainer {
     display: flex;
     flex-wrap: wrap;
+    background-color: #fff;
 
     .imageDiv {
       min-width: 250px;
@@ -17,19 +18,15 @@
     .details {
       h2.bb {
         font-size: 24px;
-        font-weight: 500;
-        color: rgb(85, 85, 85);
+        font-weight: 600;
+        color: black;
         line-height: 1.1;
-        padding: 16px 0px;
-        border-bottom: 1px solid rgb(233, 233, 233);
+        padding: 20px 0px 10px 0px;
         font-family: 'Open Sans', sans-serif;
       }
 
       .description {
-        padding: 20px 0px;
-        border-bottom: 1px solid rgb(233, 233, 233);
-        min-height: 150px;
-
+        padding: 0px 0px 20px 0px;
         p {
           font-size: 12px;
         }

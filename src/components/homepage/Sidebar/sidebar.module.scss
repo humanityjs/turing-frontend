@@ -1,6 +1,7 @@
 .sidebar {
   position: relative;
   transition: 0.5s ease;
+  padding: 0px 5px;
 }
 
 .title {
@@ -21,14 +22,21 @@
 
 .list {
   .listItem {
-    display: flex;
-    justify-content: space-between;
-    align-items: center;
     padding: 5px 0px;
     font-size: 13px;
     font-family: Roboto, Helvetica, Arial, sans-serif;
     cursor: pointer;
     transition: 0.2s ease;
+
+    .listContent {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+
+      .isSelected {
+        color: rgb(243, 51, 97);
+      }
+    }
 
     &:hover {
       color: rgb(243, 51, 97);
@@ -38,21 +46,12 @@
     }
 
     .listChild {
-      position: absolute;
       background: #fff;
-      top: -10px;
-      right: -170px;
-      min-height: calc(100% + 20px);
-      width: 170px;
-      box-shadow: 0px 5px 10px rgba(204, 204, 204, 0.25);
-      border-radius: 0px 5px 5px 0px;
-      padding: 10px;
-      display: none;
-      cursor: auto;
+      padding: 0px 10px;
 
       li {
         width: 100%;
-        padding-left: 7px;
+        padding-left: 15px;
 
         &.catTitle {
           color: rgba(0, 0, 0, 0.8);
@@ -67,7 +66,8 @@
           transition: 0.2s ease;
           padding: 3px 0px;
 
-          &:hover {
+          &:hover,
+          &.isSelected {
             color: rgb(243, 51, 97);
           }
         }
