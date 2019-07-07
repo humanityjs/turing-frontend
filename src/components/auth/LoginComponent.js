@@ -40,6 +40,8 @@ export default class LoginComponent extends Component {
 
     if (this.redirect) {
       window.location.href = `/${this.redirect}`;
+    } else {
+      window.location.href = '/';
     }
   };
 
@@ -66,7 +68,7 @@ export default class LoginComponent extends Component {
       ? `/create-account?redirect=${this.redirect}`
       : '/create-account';
     return (
-      <div className={style.authWrapper}>
+      <div id="login-wrapper" className={style.authWrapper}>
         <div className={style.authContent}>
           <h2>Login</h2>
           <div className={style.form}>
@@ -92,7 +94,11 @@ export default class LoginComponent extends Component {
             </div>
           </div>
           <div className={style.footer}>
-            <button onClick={this.loginUser} className={style.btn}>
+            <button
+              id="loginButton"
+              onClick={this.loginUser}
+              className={style.btn}
+            >
               Login
             </button>
             <p className={style.existing}>

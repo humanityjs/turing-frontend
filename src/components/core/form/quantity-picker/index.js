@@ -12,7 +12,7 @@ export default function QuantityPicker({
 }) {
   const [newValue, setNewValue] = useState(parseInt(defaultValue, 10));
   const [isEditing, setEditing] = useState(false);
-  const { dispatch } = useContext(ProductContext);
+  const { dispatch, state } = useContext(ProductContext);
 
   const decrement = () => {
     if (newValue > 1) {
@@ -37,7 +37,19 @@ export default function QuantityPicker({
     setEditing(true);
     try {
       const { data } = await editItem({ itemId, quantity: newValue });
-      dispatch(actions.SET_CART(data));
+      const oldItemIndex = state.cart.findIndex(
+        item => item.item_id === itemId
+      );
+
+      const newItemIndex = data.findIndex(item => item.item_id === itemId);
+      let newCart = state.cart.map(item => item);
+      if (oldItemIndex >= 0) {
+        const oldItem = { ...state.cart[oldItemIndex] };
+        const updatedItem = { ...data[newItemIndex] };
+        const newItem = { ...oldItem, ...updatedItem };
+        newCart.splice(oldItemIndex, 1, newItem);
+      }
+      dispatch(actions.SET_CART(newCart));
       setEditing(false);
     } catch (e) {
       setEditing(false);

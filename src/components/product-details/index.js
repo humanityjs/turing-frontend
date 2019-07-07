@@ -6,6 +6,7 @@ import { actions, ProductContext } from '../context/products.context';
 import style from './productdetails.module.scss';
 import Reviews from './Reviews';
 import Radio from '../core/form/radio';
+import QuantityPicker from '../core/form/quantity-picker';
 
 export default function ProductDetailsComponent({ productId }) {
   const {
@@ -126,9 +127,7 @@ export default function ProductDetailsComponent({ productId }) {
             <div className={`column auto`}>
               <div className={style.details}>
                 <h2 className={style.bb}>{product.name}</h2>
-                <div className={style.description}>
-                  <p>{product.description}</p>
-                </div>
+
                 <div className={style.price}>
                   <span className={style.discounted}>
                     ${noDiscount ? product.price : product.discounted_price}
@@ -137,16 +136,18 @@ export default function ProductDetailsComponent({ productId }) {
                     <span className={style.realPrice}>${product.price}</span>
                   )}
                 </div>
+
+                <div className={style.description}>
+                  <p>{product.description}</p>
+                </div>
                 <div className={style.quantity}>
-                  <label>Quantity</label>
                   <div className="field">
                     <div className="control">
-                      <input
-                        onChange={e => setQuantity(e.target.value)}
-                        className="input"
-                        type="number"
-                        placeholder="1"
-                        value={quantity}
+                      <QuantityPicker
+                        defaultValue={quantity}
+                        onChange={e => setQuantity(e)}
+                        isEdit={false}
+                        itemId={null}
                       />
                     </div>
                   </div>
@@ -158,6 +159,7 @@ export default function ProductDetailsComponent({ productId }) {
                       onClick={onClick}
                       options={attributes[attribute]}
                       name={attribute}
+                      selected={selectedAttributes[attribute]}
                     />
                   </div>
                 ))}

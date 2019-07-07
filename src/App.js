@@ -14,6 +14,7 @@ import { AuthProvider } from './components/context/auth.context';
 import Cart from './pages/Cart';
 import Checkout from './pages/Checkout';
 import Account from './pages/Account';
+import NotFound from './components/notFound';
 
 toast.configure();
 
@@ -45,13 +46,7 @@ function App() {
                 path="/account"
                 component={Account}
               />
-              <Route
-                exact
-                path="*"
-                render={() => (
-                  <span>You are missing something. Please go back.</span>
-                )}
-              />
+              <Route exact path="*" component={NotFound} />
             </Switch>
           </Layout>
         </BrowserRouter>
