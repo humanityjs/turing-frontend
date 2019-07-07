@@ -42,9 +42,11 @@ export default function AccountComponent() {
   };
 
   useEffect(() => {
-    getRegions().then(({ data }) => {
+    async function fetchData() {
+      const { data } = await getRegions();
       setRegions(data);
-    });
+    }
+    fetchData();
   }, []);
 
   const onCreditCardChange = event => {
@@ -126,6 +128,7 @@ export default function AccountComponent() {
       await editCustomerAddress(customerAddress);
       await editCustomerCard(customerCreditCard);
       const { data } = await getUser();
+      console.log('user', data);
       dispatch(actions.SET_USER(data));
       toast.success('Details edited successfully');
       setSubmitting(false);
@@ -144,7 +147,7 @@ export default function AccountComponent() {
   };
 
   return (
-    <div className={style.account}>
+    <div id="account-page" className={style.account}>
       <h2>Account Details</h2>
       <div className={style.formCont}>
         <div className="columns">
@@ -232,7 +235,8 @@ export default function AccountComponent() {
                     defaultValue={parseInt(newState.shipping_region_id, 10)}
                     name="shipping_region_id"
                     onChange={onChange}
-                    value={newState.shipping_region_id}
+                    placeholder="Shipping Region"
+                    // value={newState.shipping_region_id}
                   >
                     {regions.map(region => (
                       <option
@@ -321,7 +325,7 @@ export default function AccountComponent() {
           <div className="column">
             <div className="field">
               <label className="label">Credit Card Number</label>
-              <div className="control">
+              <div className="control" data-testid="credit_card">
                 <CreditCardInput
                   cardNumberInputProps={{
                     value: newState.credit_card,
@@ -340,7 +344,7 @@ export default function AccountComponent() {
             disabled={isSubmitting}
             onClick={onSubmit}
             className={style.button}
-            id="submitButton"
+            data-testid="submitButton"
           >
             {isSubmitting ? 'Saving..' : 'Save'}
           </button>

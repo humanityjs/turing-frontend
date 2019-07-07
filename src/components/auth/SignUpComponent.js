@@ -41,6 +41,8 @@ export default class SignUpComponent extends Component {
 
     if (this.redirect) {
       window.location.href = `/${this.redirect}`;
+    } else {
+      window.location.href = '/';
     }
   };
 
@@ -73,7 +75,7 @@ export default class SignUpComponent extends Component {
       ? `/login?redirect=${this.redirect}`
       : '/login';
     return (
-      <div className={style.authWrapper}>
+      <div id="signup-wrapper" className={style.authWrapper}>
         <div className={style.authContent}>
           <h2>Create Account</h2>
           <div className={style.form}>
@@ -108,7 +110,11 @@ export default class SignUpComponent extends Component {
             </div>
           </div>
           <div className={style.footer}>
-            <button onClick={this.createUser} className={style.btn}>
+            <button
+              id="signupButton"
+              onClick={this.createUser}
+              className={style.btn}
+            >
               Create Account
             </button>
             <p className={style.existing}>

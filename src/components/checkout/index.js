@@ -9,8 +9,6 @@ import RadioButton from '../core/form/radio';
 import CheckoutForm from './CheckoutForm';
 import style from './checkout.module.scss';
 
-Modal.setAppElement('#modal-component');
-
 export default function CheckoutComponent() {
   const {
     state: { user, isAuthenticated }

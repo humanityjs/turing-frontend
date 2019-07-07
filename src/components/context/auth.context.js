@@ -1,6 +1,6 @@
 import React from 'react';
 
-export const initialState = {
+let initialState = {
   user: null,
   accessToken: window.localStorage.getItem('accessToken'),
   isAuthenticated: false
@@ -41,7 +41,11 @@ export const AuthContext = React.createContext({});
 
 AuthContext.displayName = 'AuthContext';
 
-export function AuthProvider({ children }) {
+export function AuthProvider({ children, dummyState }) {
+  // for testing purpose
+  if (dummyState) {
+    initialState = dummyState;
+  }
   const [state, dispatch] = React.useReducer(authReducer, initialState);
 
   return (
@@ -50,3 +54,5 @@ export function AuthProvider({ children }) {
     </AuthContext.Provider>
   );
 }
+
+export { initialState };

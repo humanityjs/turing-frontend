@@ -61,7 +61,7 @@ class CheckoutForm extends Component {
 
   render() {
     return (
-      <div className={style.checkoutForm}>
+      <div id="checkout-form" className={style.checkoutForm}>
         <p>Please enter your card details.</p>
         <div className={style.borderBottom}>
           <CardElement />

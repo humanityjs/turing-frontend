@@ -5,7 +5,7 @@ import Footer from '../footer';
 
 export default function Layout({ children }) {
   return (
-    <div className={style.layout}>
+    <div data-testid="main-app" className={style.layout}>
       <Header />
       <div className={style.content}>{children}</div>
       <Footer />

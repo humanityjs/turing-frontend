@@ -1,6 +1,6 @@
 import React from 'react';
 
-export const initialState = {
+let initialState = {
   loading: true,
   products: null,
   page: 1,
@@ -65,7 +65,10 @@ export const ProductContext = React.createContext({});
 
 ProductContext.displayName = 'ProductContext';
 
-export function ProductProvider({ children }) {
+export function ProductProvider({ children, dummyState }) {
+  if (dummyState) {
+    initialState = dummyState;
+  }
   const [state, dispatch] = React.useReducer(productReducer, initialState);
 
   return (
@@ -74,3 +77,5 @@ export function ProductProvider({ children }) {
     </ProductContext.Provider>
   );
 }
+
+export { initialState };

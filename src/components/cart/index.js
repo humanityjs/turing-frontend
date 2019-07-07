@@ -44,7 +44,11 @@ export default function CartComponent() {
               const color = item.attributes.split(',')[0];
               const size = item.attributes.split(',')[1];
               return (
-                <div key={item.item_id} className={style.item}>
+                <div
+                  id={`cart-${item.item_id}`}
+                  key={item.item_id}
+                  className={style.item}
+                >
                   <div className={style.imageHolder}>
                     <img
                       src={`https://backendapi.turing.com/images/products/${
@@ -70,6 +74,7 @@ export default function CartComponent() {
                       <button
                         onClick={() => removeFromCart(item.item_id)}
                         className={style.button}
+                        id={`delete-${item.item_id}`}
                       >
                         <Icon icon={['fas', 'trash']} /> Delete
                       </button>
